@@ -1,0 +1,33 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Env files
+.env
+*.env
+
+# macOS system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings (на всякий)
+.idea/
+
+# MyPy / Pydantic cache
+.mypy_cache/
+.pyre/
+.pytype/
+
+# Coverage / test data
+.coverage
+coverage.xml
+htmlcov/
+
+# Local data/output
+*.log
+*.sqlite3
