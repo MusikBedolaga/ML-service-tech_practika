@@ -14,3 +14,6 @@ class ModerateRequest(BaseModel):
 class ModerateResponse(BaseModel):
   ban: bool
   score: float
+  
+class ModerateJobResponse(BaseModel):
+    job_id: str
