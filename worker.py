@@ -1,13 +1,18 @@
+import sys
 from redis import Redis
-from rq import Queue, Worker
-
-redis_conn = Redis(host="localhost", port=6379, db=0)
+from rq.worker import Worker, SimpleWorker
+from app.core.rq_config import get_redis
 
 if __name__ == "__main__":
-    queue = Queue("moderation", connection=redis_conn)
+    redis_conn = get_redis()
 
-    # Воркера явно привязываем к этому же соединению Redis
-    worker = Worker([queue], connection=redis_conn)
+    if sys.platform.startswith("win"):
+        # Windows — используем SimpleWorker
+        worker = SimpleWorker(["moderation"], connection=redis_conn)
+        print("Запущен SimpleWorker (Windows режим)")
+    else:
+        # Linux/macOS — обычный Worker
+        worker = Worker(["moderation"], connection=redis_conn)
+        print("Запущен Worker (Linux/macOS режим)")
 
-    # Запускаем воркера: он будет слушать очередь и выполнять задачи
     worker.work()
